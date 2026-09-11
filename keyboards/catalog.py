@@ -1,5 +1,5 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from data.catalog import CATEGORIES, get_products_by_category
+from catalog_data.catalog import CATEGORIES, get_products_by_category
 
 CATEGORY_ICONS = {
     "Тяжёлый дым": "🌫",

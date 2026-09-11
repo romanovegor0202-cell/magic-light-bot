@@ -8,7 +8,7 @@ from aiogram.types import CallbackQuery, Message, ReplyKeyboardRemove, InlineKey
 
 from config import get_settings
 from database import get_cart, create_order, clear_cart
-from data.catalog import get_product, price_for_quantity, money
+from catalog_data.catalog import get_product, price_for_quantity, money
 from keyboards.order import phone_keyboard, skip_keyboard, confirm_keyboard
 from keyboards.main import main_menu
 

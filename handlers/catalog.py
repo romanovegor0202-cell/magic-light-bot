@@ -1,7 +1,7 @@
 from aiogram import Router, F
 from aiogram.types import CallbackQuery
 from keyboards.catalog import categories_keyboard, products_keyboard, product_keyboard
-from data.catalog import CATEGORIES, get_product, get_products_by_category, price_label
+from catalog_data.catalog import CATEGORIES, get_product, get_products_by_category, price_label
 from html import escape
 from ui import replace_message
 

@@ -1,6 +1,6 @@
 from aiogram import Router, F
 from aiogram.types import CallbackQuery
-from data.catalog import get_product, price_for_quantity, money
+from catalog_data.catalog import get_product, price_for_quantity, money
 from database import get_cart, set_cart_item, clear_cart
 from keyboards.cart import cart_keyboard, empty_cart_keyboard
 from html import escape
