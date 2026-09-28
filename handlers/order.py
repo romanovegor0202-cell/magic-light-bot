@@ -232,7 +232,7 @@ async def order_confirm(callback: CallbackQuery, state: FSMContext):
     manager_text = "\n".join(manager_lines)
 
     try:
-        await callback.bot.send_message(settings.manager_id, manager_text, reply_markup=manager_keyboard(callback.from_user.id))
+        await callback.bot.send_message(settings.manager_id, manager_text, reply_markup=manager_keyboard(callback.from_user.id, order_id))
     except Exception:
         await callback.message.edit_text(
             "⚠️ Заявка сохранена, но не удалось доставить её менеджеру.\n\n"
