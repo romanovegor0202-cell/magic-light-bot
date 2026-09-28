@@ -63,12 +63,32 @@ def order_summary(data, items, total_min, total_max):
     return "\n".join(lines)
 
 
-def manager_keyboard(user_id: int):
+def manager_keyboard(user_id: int, order_id: int):
     settings = get_settings()
     rows = []
+
     if settings.manager_username:
-        rows.append([InlineKeyboardButton(text="💬 Написать менеджеру", url=f"https://t.me/{settings.manager_username}")])
-    rows.append([InlineKeyboardButton(text="💬 Открыть чат с клиентом", url=f"tg://user?id={user_id}")])
+        rows.append([
+            InlineKeyboardButton(
+                text="💬 Написать менеджеру",
+                url=f"https://t.me/{settings.manager_username}"
+            )
+        ])
+
+    rows.append([
+        InlineKeyboardButton(
+            text="💬 Открыть чат с клиентом",
+            url=f"tg://user?id={user_id}"
+        )
+    ])
+
+    rows.append([
+        InlineKeyboardButton(
+            text="📅 Добавить в Google Calendar",
+            callback_data=f"calendar_add:{order_id}"
+        )
+    ])
+
     return InlineKeyboardMarkup(inline_keyboard=rows)
 
 @router.callback_query(F.data == "order_start")
