@@ -13,6 +13,7 @@ from handlers.catalog import router as catalog_router
 from handlers.cart import router as cart_router
 from handlers.order import router as order_router
 from handlers.manager import router as manager_router
+from handlers.calendar import router as calendar_router
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s | %(levelname)s | %(name)s | %(message)s")
 
@@ -30,6 +31,7 @@ async def main():
     dp.include_router(cart_router)
     dp.include_router(order_router)
     dp.include_router(manager_router)
+    dp.include_router(calendar_router)
 
     await bot.delete_webhook(drop_pending_updates=True)
     logging.info("Magic Light bot started")
