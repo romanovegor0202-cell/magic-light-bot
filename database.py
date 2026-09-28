@@ -67,3 +67,16 @@ async def create_order(user_id: int, username: Optional[str], name: str, phone: 
         )
         await db.commit()
         return cur.lastrowid
+
+async def get_order(order_id: int):
+    async with aiosqlite.connect(DB_PATH) as db:
+        db.row_factory = aiosqlite.Row
+        cur = await db.execute(
+            """SELECT id, user_id, username, name, phone, event_date, venue,
+                      comment, items_json, total_min, total_max, created_at
+               FROM orders
+               WHERE id=?""",
+            (order_id,),
+        )
+        row = await cur.fetchone()
+        return dict(row) if row else None
