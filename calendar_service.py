@@ -69,7 +69,7 @@ def create_order_event(order: dict) -> str:
     ])
 
     event = {
-        "id": f'magiclight-order-{order["id"]}',
+        "id": f'magiclightorder{order["id"]}',
         "summary": f'Magic Light — заказ №{order["id"]} — {order["name"]}',
         "location": order["venue"],
         "description": description,
