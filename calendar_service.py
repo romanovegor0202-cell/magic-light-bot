@@ -19,11 +19,102 @@ def _credentials():
 
 
 def _parse_date(value: str):
-    for fmt in ("%d.%m.%Y", "%d-%m-%Y", "%Y-%m-%d"):
+    import re
+
+    value = value.strip().lower()
+
+    months = {
+        "января": 1,
+        "январь": 1,
+        "янв": 1,
+        "февраля": 2,
+        "февраль": 2,
+        "фев": 2,
+        "марта": 3,
+        "март": 3,
+        "мар": 3,
+        "апреля": 4,
+        "апрель": 4,
+        "апр": 4,
+        "мая": 5,
+        "май": 5,
+        "май": 5,
+        "июня": 6,
+        "июнь": 6,
+        "июн": 6,
+        "июля": 7,
+        "июль": 7,
+        "июл": 7,
+        "августа": 8,
+        "август": 8,
+        "авг": 8,
+        "сентября": 9,
+        "сентябрь": 9,
+        "сен": 9,
+        "сент": 9,
+        "октября": 10,
+        "октябрь": 10,
+        "окт": 10,
+        "ноября": 11,
+        "ноябрь": 11,
+        "ноя": 11,
+        "декабря": 12,
+        "декабрь": 12,
+        "дек": 12,
+    }
+
+    # Даты с цифровым месяцем:
+    # 04.10.26
+    # 04 10 26
+    # 04-10-26
+    # 04/10/26
+    match = re.fullmatch(
+        r"(\d{1,2})[\s./-]+(\d{1,2})[\s./-]+(\d{2}|\d{4})",
+        value
+    )
+
+    if match:
+        day, month, year = match.groups()
+
+        day = int(day)
+        month = int(month)
+        year = int(year)
+
+        if year < 100:
+            year += 2000
+
         try:
-            return datetime.strptime(value.strip(), fmt).date()
+            return datetime(year, month, day).date()
         except ValueError:
-            pass
+            raise ValueError(f"Invalid event date: {value}")
+
+    # Даты с названием месяца:
+    # 04 октября 26
+    # 4 октября 2026
+    # 04 окт 26
+    match = re.fullmatch(
+        r"(\d{1,2})\s+([а-яё]+)\s+(\d{2}|\d{4})",
+        value
+    )
+
+    if match:
+        day, month_name, year = match.groups()
+
+        if month_name not in months:
+            raise ValueError(f"Unknown month: {month_name}")
+
+        day = int(day)
+        month = months[month_name]
+        year = int(year)
+
+        if year < 100:
+            year += 2000
+
+        try:
+            return datetime(year, month, day).date()
+        except ValueError:
+            raise ValueError(f"Invalid event date: {value}")
+
     raise ValueError(f"Unsupported event date: {value}")
 
 
